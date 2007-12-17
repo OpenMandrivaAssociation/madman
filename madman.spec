@@ -16,7 +16,6 @@ Source3:	%{name}-48.png
 Source4:	mad2pl-0.1.tar.bz2
 Patch0:		madman-0.93-gcc3.4.patch.bz2
 Patch1:         madman-fix-scons-0.96.1.patch.bz2
-BuildRoot:	%{_tmppath}/%{name}-%{version}
 BuildRequires:	qt3-devel
 BuildRequires:	xmms-devel
 BuildRequires:	libid3tag-devel
