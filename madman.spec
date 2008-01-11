@@ -72,15 +72,15 @@ rm -rf %{buildroot}/%{_bindir}/.sconsign %{buildroot}/%{_libdir}/madman/plugins/
 
 # menu
 (cd $RPM_BUILD_ROOT
-mkdir -p ./usr/lib/menu
-cat > .%{_menudir}/%name <<EOF
-?package(%name):\
-command="%{_bindir}/%{name}"\
-icon="%name.png"\
-title="Madman"\
-longtitle="Madman, a music manager."\
-needs="x11"\
-section="Multimedia/Sound"
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications/
+cat << EOF > %buildroot%{_datadir}/applications/mandriva-%name.desktop
+[Desktop Entry]
+Type=Application
+Exec=%{_bindir}/%{name}
+Icon=%name
+Name=Madman
+Comment=Madman, a music manager.
+Categories=Audio;
 EOF
 )
 
@@ -118,6 +118,6 @@ rm -rf %{buildroot}
 %{_iconsdir}/%name.png
 %{_liconsdir}/%name.png
 %{_miconsdir}/%name.png
-%{_menudir}/%{name}
+%{_datadir}/applications/mandriva-%{name}.desktop
 
 
