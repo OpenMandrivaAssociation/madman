@@ -2,7 +2,7 @@
 %define version	0.93
 %define release	%mkrel 3
 
-Summary:	Madman is a music manager
+Summary:	Music manager
 Name:		%{name}
 Version:	%{version}
 Release:	%{release}
