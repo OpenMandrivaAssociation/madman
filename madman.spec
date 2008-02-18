@@ -1,6 +1,6 @@
 %define name	madman
 %define version	0.93
-%define release	%mkrel 3
+%define release	%mkrel 4
 
 Summary:	Music manager
 Name:		%{name}
