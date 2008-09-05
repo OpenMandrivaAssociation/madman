@@ -1,25 +1,35 @@
-%define name	madman
-%define version	0.93
-%define release	%mkrel 5
+%define rel	1
+%define git	20080904
+
+%if %git
+%define release		%{mkrel 0.%{git}.%{rel}}
+%define distname	%{name}-%{git}.tar.lzma
+%define dirname		%{name}
+%else
+%define release		%{mkrel %{rel}}
+%define distname	%{name}-%{version}.tar.gz
+%define dirname		%{name}-%{version}
+%endif
 
 Summary:	Music manager
-Name:		%{name}
-Version:	%{version}
+Name:		madman
+Version:	0.94
 Release:	%{release}
-License:	GPL
+License:	GPLv2+
 URL:		http://madman.sourceforge.net
 Group:		Sound
-Source0:	http://prdownloads.sourceforge.net/madman/%{name}-%{version}.tar.bz2
+Source0:	http://downloads.sourceforge.net/%{name}/%{distname}
 Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
 Source4:	mad2pl-0.1.tar.bz2
-Patch0:		madman-0.93-gcc3.4.patch.bz2
-Patch1:         madman-fix-scons-0.96.1.patch.bz2
+Patch0:		madman-0.94-gcc43.patch
+Patch1:		madman-0.94-includes.patch
+Patch2:		mad2pl-0.1-includes.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 BuildRequires:	qt3-devel
 BuildRequires:	xmms-devel
-BuildRequires:	libid3tag-devel
+BuildRequires:	taglib-devel
 BuildRequires:	oggvorbis-devel
 BuildRequires:	scons
 
@@ -37,28 +47,30 @@ fuzzy search finds what you're looking for anyway.
   
 
 %prep
-%setup -q
-%setup -q -T -D -a4
-%patch0 -p1
-%patch1 -p0
+%setup -q -n %{dirname}
+%setup -q -n %{dirname} -T -D -a4
+%patch0 -p1 -b .gcc43
+%patch1 -p1 -b .includes
+%patch2 -p1 -b .includes
 
 %build
-scons %_smp_mflags prefix=%{_prefix}
+%configure_scons
+%scons
 
 # make mad2pl
-cd mad2pl
+pushd mad2pl
 prefix=%{_prefix} make
-cd ..
+popd
 
 %install
 rm -rf %{buildroot}
 #gw includes wrong plugin dir
-#scons prefix=%{buildroot}%{_prefix} install
-mkdir -p %buildroot{%_bindir,%_libdir/%name/}
-install -m 755 main/%name %buildroot%_bindir
-cp -r plugins %buildroot%_libdir/%name/
-rm -f %buildroot%_libdir/%name/plugins/README
-rm -f %buildroot%_libdir/%name/plugins/plugin_example
+#scons_install
+mkdir -p %{buildroot}{%_bindir,%_libdir/%{name}/}
+install -m 755 ,build/release/main/%{name} %{buildroot}%{_bindir}
+cp -r plugins %{buildroot}%{_libdir}/%{name}/
+rm -f %{buildroot}%{_libdir}/%{name}/plugins/README
+rm -f %{buildroot}%{_libdir}/%{name}/plugins/plugin_example
 
 # install mad2pl
 pwd
@@ -71,31 +83,23 @@ cp README README.mad2pl
 rm -rf %{buildroot}/%{_bindir}/.sconsign %{buildroot}/%{_libdir}/madman/plugins/.sconsign
 
 # menu
-(cd $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications/
-cat << EOF > %buildroot%{_datadir}/applications/mandriva-%name.desktop
+mkdir -p %{buildroot}%{_datadir}/applications/
+cat << EOF > %{buildroot}%{_datadir}/applications/mandriva-%{name}.desktop
 [Desktop Entry]
 Type=Application
 Exec=%{_bindir}/%{name}
-Icon=%name
+Icon=%{name}
 Name=Madman
-Comment=Madman, a music manager.
-Categories=Audio;
+Comment=Music manager
+Categories=Qt;Audio;Player;
 EOF
-)
 
-install -d %buildroot/%_miconsdir
-install -d %buildroot/%_liconsdir
-install -d %buildroot/%_iconsdir
+mkdir -p %{buildroot}%{_iconsdir}/hicolor/{16x16,32x32,48x48}/apps
 
 # icons
-install -m644 %SOURCE1 %buildroot/%_miconsdir/%name.png
-install -m644 %SOURCE2 %buildroot/%_iconsdir/%name.png
-install -m644 %SOURCE3 %buildroot/%_liconsdir/%name.png
-
-# no files yet
-#%%{find_lang} %name
-
+install -m644 %{SOURCE1} %{buildroot}/%{_iconsdir}/hicolor/16x16/apps/%{name}.png
+install -m644 %{SOURCE2} %{buildroot}/%{_iconsdir}/hicolor/32x32/apps/%{name}.png
+install -m644 %{SOURCE3} %{buildroot}/%{_iconsdir}/hicolor/48x48/apps/%{name}.png
 
 %if %mdkversion < 200900
 %post
@@ -107,21 +111,14 @@ install -m644 %SOURCE3 %buildroot/%_liconsdir/%name.png
 %{clean_menus}
 %endif
 
-
 %clean
 rm -rf %{buildroot}
 
-
 %files
 %defattr(-,root,root,-)
-%doc COPYING README mad2pl/README.mad2pl
+%doc README mad2pl/README.mad2pl
 %{_bindir}/*
-%dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/plugins
-%{_libdir}/%{name}/plugins/*
-%{_iconsdir}/%name.png
-%{_liconsdir}/%name.png
-%{_miconsdir}/%name.png
+%{_libdir}/%{name}
+%{_iconsdir}/hicolor/*/apps/%{name}.png
 %{_datadir}/applications/mandriva-%{name}.desktop
-
 
