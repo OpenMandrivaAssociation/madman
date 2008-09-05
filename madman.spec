@@ -23,8 +23,11 @@ Source1:	%{name}-16.png
 Source2:	%{name}-32.png
 Source3:	%{name}-48.png
 Source4:	mad2pl-0.1.tar.bz2
+# Fix build with gcc 4.3 (bunch of missing includes) - AdamW 2008/09
 Patch0:		madman-0.94-gcc43.patch
+# Drop some bogus includes (breaks build) - AdamW 2008/09
 Patch1:		madman-0.94-includes.patch
+# Fix build of mad2pl with gcc 4.3 (includes) - AdamW 2008/09
 Patch2:		mad2pl-0.1-includes.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
 BuildRequires:	qt3-devel
