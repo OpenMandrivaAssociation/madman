@@ -1,0 +1,14 @@
+--- madman/designer/mainwin.ui	2008-09-04 23:52:44.000000000 -0700
++++ madman/designer/mainwin.ui.new	2008-09-05 00:24:27.000000000 -0700
+@@ -1531,11 +1531,4 @@
+     <slot>fileExitAction_activated()</slot>
+ </slots>
+ <layoutdefaults spacing="6" margin="2"/>
+-<includehints>
+-    <includehint>tclickablelabel.h</includehint>
+-    <includehint>tacceleratorlineedit.h</includehint>
+-    <includehint>tsonglistview.h</includehint>
+-    <includehint>tsetlistview.h</includehint>
+-    <includehint>tsonglistview.h</includehint>
+-</includehints>
+ </UI>

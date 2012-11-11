@@ -1,0 +1,40 @@
+--- madman/database/criterion.h	2008-09-04 23:52:44.000000000 -0700
++++ madman/database/criterion.h.new	2008-09-05 00:16:37.000000000 -0700
+@@ -27,6 +27,7 @@
+ 
+ 
+ #include "utility/base.h"
++#include <memory>
+ 
+ 
+ 
+--- madman/database/song_collection.cpp	2008-09-04 23:52:44.000000000 -0700
++++ madman/database/song_collection.cpp.new	2008-09-05 00:19:22.000000000 -0700
+@@ -27,6 +27,7 @@
+ #include <qapplication.h>
+ #include <qprogressdialog.h>
+ #include <qdir.h>
++#include <memory>
+ 
+ #include "song_collection.h"
+ 
+--- madman/utility/player.h	2008-09-04 23:52:44.000000000 -0700
++++ madman/utility/player.h.new	2008-09-05 00:20:22.000000000 -0700
+@@ -30,6 +30,7 @@
+ #include <qtimer.h>
+ #include <qsettings.h>
+ #include "utility/base.h"
++#include <memory>
+ 
+ 
+ 
+--- madman/ui/clickable_label.h	2008-09-04 23:52:44.000000000 -0700
++++ madman/ui/clickable_label.h.new	2008-09-05 00:26:18.000000000 -0700
+@@ -28,6 +28,7 @@
+ #include <qframe.h>
+ #include <qsimplerichtext.h>
+ #include "utility/base.h"
++#include <memory>
+ 
+ 
+ 

@@ -1,0 +1,10 @@
+--- madman/mad2pl/mad2pl.cc	2003-07-13 13:27:38.000000000 -0700
++++ madman/mad2pl/mad2pl.cc.new	2008-09-05 00:30:13.000000000 -0700
+@@ -19,6 +19,7 @@
+  using std::map;
+  
+ #include <stdlib.h>
++#include <cstring>
+ 
+ // Main program
+ int main( int argc, char* argv[] ) {
