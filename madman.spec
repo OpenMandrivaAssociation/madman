@@ -16,7 +16,7 @@ Name:		madman
 Version:	0.94
 Release:	%{release}
 License:	GPLv2+
-URL:		http://madman.sourceforge.net
+URL:		https://madman.sourceforge.net
 Group:		Sound
 Source0:	http://downloads.sourceforge.net/%{name}/%{distname}
 Source1:	%{name}-16.png
