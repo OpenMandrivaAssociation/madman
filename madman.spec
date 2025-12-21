@@ -30,6 +30,11 @@ Patch1:		madman-0.94-includes.patch
 # Fix build of mad2pl with gcc 4.3 (includes) - AdamW 2008/09
 Patch2:		mad2pl-0.1-includes.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	qt3-devel
 BuildRequires:	xmms-devel
 BuildRequires:	taglib-devel
